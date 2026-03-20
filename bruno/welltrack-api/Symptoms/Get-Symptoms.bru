@@ -1,0 +1,15 @@
+meta {
+  name: Get Symptoms
+  type: http
+  seq: 1
+}
+
+get {
+  url: {{baseUrl}}/api/symptoms
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
