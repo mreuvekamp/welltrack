@@ -1,0 +1,22 @@
+meta {
+  name: Create Symptom
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/symptoms
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "name": "Custom Symptom",
+    "category": "custom"
+  }
+}
