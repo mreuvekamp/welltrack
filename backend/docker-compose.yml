@@ -3,7 +3,7 @@ services:
     image: postgres:16-alpine
     container_name: welltrack-db
     ports:
-      - "5432:5432"
+      - "5465:5432"
     environment:
       POSTGRES_DB: welltrack
       POSTGRES_PASSWORD: welltrack
