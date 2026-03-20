@@ -52,6 +52,10 @@ npx prisma db seed        # Seed default data
 - Timezone stored per-user, all times stored as UTC in database
 - JWT with short-lived access tokens + long-lived refresh tokens
 
+## Naming Conventions
+
+No spaces in file or directory names. Use hyphens (`kebab-case`) instead.
+
 ## Git Workflow
 
 **Never commit directly to `main`.** Always create a feature branch and open a pull request.
