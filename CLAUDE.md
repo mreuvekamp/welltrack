@@ -78,6 +78,10 @@ Before marking any task as cpmplete:
 - Run specific test file: `npm test -- path/to/test.ts`
 - Run test matching pattern: `npm test -- --grep "pattern"`
 
+## Bruno API Collection
+
+De Bruno collectie staat in `bruno/welltrack-api/`. Elk nieuw API endpoint moet worden opgenomen als `.bru` bestand in de betreffende subsectie (bijv. `Auth/`, `Users/`, `Symptoms/`, etc.).
+
 ## Documentation
 
 - `Documents/Requirements.md` — Full product requirements and data model
