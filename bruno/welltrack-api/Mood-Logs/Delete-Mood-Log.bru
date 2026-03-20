@@ -1,0 +1,15 @@
+meta {
+  name: Delete Mood Log
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/mood-logs/:id
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}

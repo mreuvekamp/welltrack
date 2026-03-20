@@ -1,0 +1,25 @@
+meta {
+  name: Create Mood Log
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/mood-logs
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "mood_score": 4,
+    "energy_level": 3,
+    "stress_level": 2,
+    "notes": "Feeling good today",
+    "logged_at": "2025-01-15T10:00:00.000Z"
+  }
+}

@@ -1,0 +1,23 @@
+meta {
+  name: Update Mood Log
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/mood-logs/:id
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "mood_score": 5,
+    "energy_level": 4,
+    "notes": "Updated mood entry"
+  }
+}

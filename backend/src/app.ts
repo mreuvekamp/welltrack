@@ -2,6 +2,7 @@ import express from "express";
 import cors from "cors";
 import authRoutes from "./routes/auth";
 import userRoutes from "./routes/users";
+import moodLogRoutes from "./routes/mood-logs";
 import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
@@ -15,6 +16,7 @@ app.get("/api/health", (_req, res) => {
 
 app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/mood-logs", moodLogRoutes);
 
 app.use(errorHandler);
 
