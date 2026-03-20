@@ -36,10 +36,10 @@ This document breaks down the WellTrack requirements into actionable development
 ### 1.3 Authentication System
 
 - [ ] Create auth middleware to verify JWT tokens
-- [ ] Create utility function for hashing passwords with bcrypt
-- [ ] Create utility function for generating access tokens (short-lived)
-- [ ] Create utility function for generating refresh tokens (long-lived)
-- [ ] Implement `POST /api/auth/register` - validate input, check email uniqueness, hash password, create user, return tokens
+- [x] Create utility function for hashing passwords with bcrypt
+- [x] Create utility function for generating access tokens (short-lived)
+- [x] Create utility function for generating refresh tokens (long-lived)
+- [x] Implement `POST /api/auth/register` - validate input, check email uniqueness, hash password, create user, return tokens
 - [ ] Implement `POST /api/auth/login` - validate credentials, return tokens
 - [ ] Implement `POST /api/auth/refresh` - validate refresh token, issue new access token
 - [ ] Implement `POST /api/auth/logout` - invalidate refresh token (add to blocklist or delete from DB)
