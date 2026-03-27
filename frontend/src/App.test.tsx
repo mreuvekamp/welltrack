@@ -22,11 +22,9 @@ const mockedHasAccessToken = vi.mocked(hasAccessToken);
 
 /**
  * Wraps App in MemoryRouter for testing.
- * Note: App includes its own AuthProvider, but we must provide the router
- * externally since main.tsx wraps App in BrowserRouter.
+ * App includes its own AuthProvider but needs an external router.
  */
 function renderApp(initialEntries: string[] = ['/']) {
-  // Remove existing BrowserRouter from main.tsx by rendering with MemoryRouter
   return render(
     <MemoryRouter initialEntries={initialEntries}>
       <App />
@@ -46,7 +44,8 @@ describe('App routing', () => {
     renderApp(['/']);
 
     await waitFor(() => {
-      expect(screen.getByText('Login')).toBeInTheDocument();
+      // LoginPage renders "Welcome back" subtitle
+      expect(screen.getByText('Welcome back')).toBeInTheDocument();
     });
   });
 
@@ -56,7 +55,7 @@ describe('App routing', () => {
     renderApp(['/login']);
 
     await waitFor(() => {
-      expect(screen.getByText('Login')).toBeInTheDocument();
+      expect(screen.getByRole('button', { name: 'Sign in' })).toBeInTheDocument();
     });
   });
 
@@ -66,7 +65,9 @@ describe('App routing', () => {
     renderApp(['/register']);
 
     await waitFor(() => {
-      expect(screen.getByText('Register')).toBeInTheDocument();
+      expect(
+        screen.getByRole('button', { name: 'Create account' }),
+      ).toBeInTheDocument();
     });
   });
 });
