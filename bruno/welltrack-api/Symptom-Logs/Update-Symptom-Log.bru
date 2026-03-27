@@ -1,0 +1,22 @@
+meta {
+  name: Update Symptom Log
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/symptom-logs/:id
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "severity": 9,
+    "notes": "Updated symptom entry"
+  }
+}
