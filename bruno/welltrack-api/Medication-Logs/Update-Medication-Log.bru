@@ -1,0 +1,22 @@
+meta {
+  name: Update Medication Log
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/medication-logs/:id
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "taken": false,
+    "notes": "Updated medication log entry"
+  }
+}

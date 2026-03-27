@@ -452,3 +452,430 @@ Response: 200 OK
 
 Error responses:
 - 404 - Log not found or belongs to another user
+
+---
+
+## Medications
+
+### List Medications
+GET /api/medications (requires auth)
+
+Returns all medications belonging to the authenticated user, ordered by name ascending.
+
+Response: 200 OK
+```json
+{
+  "medications": [
+    {
+      "id": "uuid",
+      "user_id": "uuid",
+      "name": "Ibuprofen",
+      "dosage": "200mg",
+      "frequency": "Twice daily",
+      "is_active": true,
+      "created_at": "2025-01-15T10:00:00.000Z"
+    }
+  ]
+}
+```
+
+### Create Medication
+POST /api/medications (requires auth)
+
+Request:
+```json
+{
+  "name": "Ibuprofen",
+  "dosage": "200mg",
+  "frequency": "Twice daily"
+}
+```
+
+Required fields:
+- `name` - string (1-200 characters)
+
+Optional fields:
+- `dosage` - string (max 200 characters)
+- `frequency` - string (max 200 characters)
+
+Response: 201 Created
+```json
+{
+  "medication": {
+    "id": "uuid",
+    "user_id": "uuid",
+    "name": "Ibuprofen",
+    "dosage": "200mg",
+    "frequency": "Twice daily",
+    "is_active": true,
+    "created_at": "2025-01-15T10:00:00.000Z"
+  }
+}
+```
+
+### Update Medication
+PATCH /api/medications/:id (requires auth)
+
+Users can only update their own medications. At least one field must be provided.
+
+Request:
+```json
+{
+  "name": "Updated Name",
+  "dosage": "400mg",
+  "is_active": false
+}
+```
+
+Response: 200 OK
+```json
+{
+  "medication": { ... }
+}
+```
+
+### Delete Medication
+DELETE /api/medications/:id (requires auth)
+
+Users can only delete their own medications.
+
+Response: 200 OK
+```json
+{
+  "message": "Medication deleted successfully"
+}
+```
+
+---
+
+## Medication Logs
+
+### List Medication Logs
+GET /api/medication-logs (requires auth)
+
+Returns medication logs for the authenticated user, ordered by created_at descending. Includes related medication details.
+
+Query parameters:
+- `startDate` (optional) - ISO 8601 datetime, filters logs on or after this date
+- `endDate` (optional) - ISO 8601 datetime, filters logs on or before this date
+
+Response: 200 OK
+```json
+{
+  "medication_logs": [
+    {
+      "id": "uuid",
+      "user_id": "uuid",
+      "medication_id": "uuid",
+      "taken": true,
+      "taken_at": "2025-01-15T10:00:00.000Z",
+      "notes": "Took with breakfast",
+      "created_at": "2025-01-15T10:05:00.000Z",
+      "medication": {
+        "id": "uuid",
+        "name": "Ibuprofen",
+        "dosage": "200mg",
+        "frequency": "Twice daily",
+        "is_active": true
+      }
+    }
+  ]
+}
+```
+
+### Create Medication Log
+POST /api/medication-logs (requires auth)
+
+Logs whether a medication was taken or not. The medication must belong to the authenticated user.
+
+Request:
+```json
+{
+  "medication_id": "uuid",
+  "taken": true,
+  "taken_at": "2025-01-15T10:00:00.000Z",
+  "notes": "Took with breakfast"
+}
+```
+
+Required fields:
+- `medication_id` - UUID of an existing medication owned by the user
+- `taken` - boolean
+
+Optional fields:
+- `taken_at` - ISO 8601 datetime
+- `notes` - string
+
+Response: 201 Created
+```json
+{
+  "medication_log": {
+    "id": "uuid",
+    "user_id": "uuid",
+    "medication_id": "uuid",
+    "taken": true,
+    "taken_at": "2025-01-15T10:00:00.000Z",
+    "notes": "Took with breakfast",
+    "created_at": "2025-01-15T10:05:00.000Z"
+  }
+}
+```
+
+### Update Medication Log
+PATCH /api/medication-logs/:id (requires auth)
+
+Users can only update their own logs. At least one field must be provided.
+Optional fields (taken_at, notes) can be set to null.
+
+Request:
+```json
+{
+  "taken": false,
+  "notes": "Skipped due to stomach ache"
+}
+```
+
+Response: 200 OK
+```json
+{
+  "medication_log": { ... }
+}
+```
+
+### Delete Medication Log
+DELETE /api/medication-logs/:id (requires auth)
+
+Users can only delete their own logs.
+
+Response: 200 OK
+```json
+{
+  "message": "Medication log deleted successfully"
+}
+```
+
+---
+
+## Habits
+
+### List Habits
+GET /api/habits (requires auth)
+
+Returns system default habits (user_id = null) and the authenticated user's custom habits, ordered by name ascending.
+
+Response: 200 OK
+```json
+{
+  "habits": [
+    {
+      "id": "uuid",
+      "user_id": null,
+      "name": "Exercise",
+      "tracking_type": "boolean",
+      "unit": null,
+      "is_active": true
+    },
+    {
+      "id": "uuid",
+      "user_id": "uuid",
+      "name": "Water Intake",
+      "tracking_type": "numeric",
+      "unit": "glasses",
+      "is_active": true
+    }
+  ]
+}
+```
+
+### Create Habit
+POST /api/habits (requires auth)
+
+Creates a custom habit for the authenticated user.
+
+Request:
+```json
+{
+  "name": "Meditation",
+  "tracking_type": "boolean"
+}
+```
+
+Required fields:
+- `name` - string (1-200 characters)
+- `tracking_type` - one of: `boolean`, `numeric`, `duration`
+
+Optional fields:
+- `unit` - string (max 100 characters), e.g. "glasses", "hours", "minutes"
+
+Response: 201 Created
+```json
+{
+  "habit": {
+    "id": "uuid",
+    "user_id": "uuid",
+    "name": "Meditation",
+    "tracking_type": "boolean",
+    "unit": null,
+    "is_active": true
+  }
+}
+```
+
+### Update Habit
+PATCH /api/habits/:id (requires auth)
+
+Only user-created habits can be updated. System defaults cannot be modified.
+
+Request:
+```json
+{
+  "name": "Updated Name",
+  "tracking_type": "numeric",
+  "unit": "count",
+  "is_active": false
+}
+```
+
+All fields are optional, but at least one must be provided.
+
+Response: 200 OK
+```json
+{
+  "habit": { ... }
+}
+```
+
+Error responses:
+- 400 - Empty body or validation error
+- 403 - Cannot modify system default habits
+- 404 - Habit not found
+
+### Delete Habit
+DELETE /api/habits/:id (requires auth)
+
+Only user-created habits can be deleted. System defaults cannot be deleted.
+
+Response: 200 OK
+```json
+{
+  "message": "Habit deleted successfully"
+}
+```
+
+Error responses:
+- 403 - Cannot delete system default habits
+- 404 - Habit not found
+
+---
+
+## Habit Logs
+
+### List Habit Logs
+GET /api/habit-logs (requires auth)
+
+Returns habit logs for the authenticated user, ordered by logged_at descending. Includes related habit details.
+
+Query parameters:
+- `startDate` (optional) - ISO 8601 datetime, filters logs on or after this date
+- `endDate` (optional) - ISO 8601 datetime, filters logs on or before this date
+
+Response: 200 OK
+```json
+{
+  "habit_logs": [
+    {
+      "id": "uuid",
+      "user_id": "uuid",
+      "habit_id": "uuid",
+      "value_boolean": true,
+      "value_numeric": null,
+      "value_duration": null,
+      "notes": "Morning run",
+      "logged_at": "2025-01-15T10:00:00.000Z",
+      "created_at": "2025-01-15T10:05:00.000Z",
+      "habit": {
+        "id": "uuid",
+        "name": "Exercise",
+        "tracking_type": "boolean",
+        "unit": null,
+        "is_active": true
+      }
+    }
+  ]
+}
+```
+
+### Create Habit Log
+POST /api/habit-logs (requires auth)
+
+Creates a new habit log. The habit must be a system default or belong to the authenticated user.
+
+Request:
+```json
+{
+  "habit_id": "uuid",
+  "value_boolean": true,
+  "notes": "Completed morning exercise",
+  "logged_at": "2025-01-15T10:00:00.000Z"
+}
+```
+
+Required fields:
+- `habit_id` - UUID of an existing habit (system default or user's own)
+- `logged_at` - ISO 8601 datetime
+
+Optional fields (use the appropriate one based on tracking_type):
+- `value_boolean` - boolean (for boolean habits)
+- `value_numeric` - number (for numeric habits)
+- `value_duration` - integer (for duration habits, in minutes)
+- `notes` - string
+
+Response: 201 Created
+```json
+{
+  "habit_log": {
+    "id": "uuid",
+    "user_id": "uuid",
+    "habit_id": "uuid",
+    "value_boolean": true,
+    "value_numeric": null,
+    "value_duration": null,
+    "notes": "Completed morning exercise",
+    "logged_at": "2025-01-15T10:00:00.000Z",
+    "created_at": "2025-01-15T10:05:00.000Z"
+  }
+}
+```
+
+### Update Habit Log
+PATCH /api/habit-logs/:id (requires auth)
+
+Users can only update their own logs. At least one field must be provided.
+Value fields and notes can be set to null.
+
+Request:
+```json
+{
+  "value_boolean": false,
+  "notes": "Skipped today"
+}
+```
+
+Response: 200 OK
+```json
+{
+  "habit_log": { ... }
+}
+```
+
+### Delete Habit Log
+DELETE /api/habit-logs/:id (requires auth)
+
+Users can only delete their own logs.
+
+Response: 200 OK
+```json
+{
+  "message": "Habit log deleted successfully"
+}
+```
