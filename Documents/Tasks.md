@@ -153,59 +153,59 @@ This document breaks down the WellTrack requirements into actionable development
 
 ### 2.5 Dashboard Page
 
-- [ ] Create Dashboard page component
-- [ ] Display current date and greeting
-- [ ] Build "Today's Summary" section showing logged items
-- [ ] Create quick-add buttons for each log type (symptoms, mood, meds, habits)
-- [ ] Show "days logged this week" streak indicator
-- [ ] Fetch and display today's logs on mount
+- [x] Create Dashboard page component
+- [x] Display current date and greeting
+- [x] Build "Today's Summary" section showing logged items
+- [x] Create quick-add buttons for each log type (symptoms, mood, meds, habits)
+- [x] Show "days logged this week" streak indicator
+- [x] Fetch and display today's logs on mount
 
 ### 2.6 Symptom Logging
 
-- [ ] Create SymptomLogModal component
-- [ ] Build symptom selector (dropdown or searchable list)
-- [ ] Create severity slider/input (1-10 scale) with visual feedback
-- [ ] Add optional notes textarea
-- [ ] Add date/time picker (defaults to now)
-- [ ] Implement form submission to API
-- [ ] Add success feedback and close modal
+- [x] Create SymptomLogModal component
+- [x] Build symptom selector (dropdown or searchable list)
+- [x] Create severity slider/input (1-10 scale) with visual feedback
+- [x] Add optional notes textarea
+- [x] Add date/time picker (defaults to now)
+- [x] Implement form submission to API
+- [x] Add success feedback and close modal
 
 ### 2.7 Mood Logging
 
-- [ ] Create MoodLogModal component
-- [ ] Build mood selector with 5-point scale (emoji or color-coded)
-- [ ] Add optional energy level input (1-5)
-- [ ] Add optional stress level input (1-5)
-- [ ] Add optional notes textarea
-- [ ] Add date/time picker
-- [ ] Implement form submission
+- [x] Create MoodLogModal component
+- [x] Build mood selector with 5-point scale (emoji or color-coded)
+- [x] Add optional energy level input (1-5)
+- [x] Add optional stress level input (1-5)
+- [x] Add optional notes textarea
+- [x] Add date/time picker
+- [x] Implement form submission
 
 ### 2.8 Medication Logging
 
-- [ ] Create MedicationLogModal component
-- [ ] List user's active medications with checkboxes
-- [ ] Add "taken at" time picker
-- [ ] Add optional notes field
-- [ ] Implement form submission
+- [x] Create MedicationLogModal component
+- [x] List user's active medications with checkboxes
+- [x] Add "taken at" time picker
+- [x] Add optional notes field
+- [x] Implement form submission
 
 ### 2.9 Habit Logging
 
-- [ ] Create HabitLogModal component
-- [ ] Display habits grouped by tracking type
-- [ ] Build boolean habit toggle (yes/no)
-- [ ] Build numeric habit input with unit label
-- [ ] Build duration habit input (hours/minutes)
-- [ ] Add optional notes field
-- [ ] Implement form submission
+- [x] Create HabitLogModal component
+- [x] Display habits grouped by tracking type
+- [x] Build boolean habit toggle (yes/no)
+- [x] Build numeric habit input with unit label
+- [x] Build duration habit input (hours/minutes)
+- [x] Add optional notes field
+- [x] Implement form submission
 
 ### 2.10 TypeScript Types
 
-- [ ] Define User type matching backend model
-- [ ] Define Symptom and SymptomLog types
-- [ ] Define MoodLog type
-- [ ] Define Medication and MedicationLog types
-- [ ] Define Habit and HabitLog types
-- [ ] Define API response wrapper types
+- [x] Define User type matching backend model
+- [x] Define Symptom and SymptomLog types
+- [x] Define MoodLog type
+- [x] Define Medication and MedicationLog types
+- [x] Define Habit and HabitLog types
+- [x] Define API response wrapper types
 
 ---
 

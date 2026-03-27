@@ -6,16 +6,7 @@ import RegisterPage from '@/pages/RegisterPage';
 import ForgotPasswordPage from '@/pages/ForgotPasswordPage';
 import ResetPasswordPage from '@/pages/ResetPasswordPage';
 import Layout from '@/components/Layout';
-
-/** Placeholder pages for protected routes - will be replaced in later tasks */
-function DashboardPage() {
-  return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold text-warm-900">Dashboard</h1>
-      <p className="mt-2 text-text-muted">Your daily overview will appear here.</p>
-    </div>
-  );
-}
+import DashboardPage from '@/pages/DashboardPage';
 
 function HistoryPage() {
   return (
