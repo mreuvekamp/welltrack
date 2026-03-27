@@ -1,13 +1,11 @@
 import { Response, NextFunction } from "express";
 import { z } from "zod";
-import { PrismaClient } from "@prisma/client";
 import { AuthRequest } from "../middleware/auth";
+import * as moodLogService from "../services/mood-log-service";
 
 interface MoodLogRequest extends AuthRequest {
   params: { id: string };
 }
-
-const prisma = new PrismaClient();
 
 const createMoodLogSchema = z.object({
   mood_score: z.number().int().min(1).max(5),
@@ -30,34 +28,28 @@ const dateRangeSchema = z.object({
   endDate: z.string().datetime().optional(),
 });
 
+/**
+ * Handles GET /api/mood-logs - returns mood logs for the authenticated user.
+ * Supports optional date range filtering via startDate and endDate query params.
+ */
 export async function getMoodLogs(
   req: AuthRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
-    const { startDate, endDate } = dateRangeSchema.parse(req.query);
-
-    const where: Record<string, unknown> = { user_id: req.userId };
-
-    if (startDate || endDate) {
-      const loggedAtFilter: Record<string, Date> = {};
-      if (startDate) loggedAtFilter.gte = new Date(startDate);
-      if (endDate) loggedAtFilter.lte = new Date(endDate);
-      where.logged_at = loggedAtFilter;
-    }
-
-    const moodLogs = await prisma.moodLog.findMany({
-      where,
-      orderBy: { logged_at: "desc" },
-    });
-
+    const filter = dateRangeSchema.parse(req.query);
+    const moodLogs = await moodLogService.getMoodLogs(req.userId!, filter);
     res.status(200).json({ mood_logs: moodLogs });
   } catch (err) {
     next(err);
   }
 }
 
+/**
+ * Handles POST /api/mood-logs - creates a new mood log.
+ * Requires mood_score (1-5) and logged_at. Energy, stress, and notes are optional.
+ */
 export async function createMoodLog(
   req: AuthRequest,
   res: Response,
@@ -65,24 +57,17 @@ export async function createMoodLog(
 ): Promise<void> {
   try {
     const data = createMoodLogSchema.parse(req.body);
-
-    const moodLog = await prisma.moodLog.create({
-      data: {
-        user_id: req.userId!,
-        mood_score: data.mood_score,
-        energy_level: data.energy_level,
-        stress_level: data.stress_level,
-        notes: data.notes,
-        logged_at: new Date(data.logged_at),
-      },
-    });
-
+    const moodLog = await moodLogService.createMoodLog(req.userId!, data);
     res.status(201).json({ mood_log: moodLog });
   } catch (err) {
     next(err);
   }
 }
 
+/**
+ * Handles PATCH /api/mood-logs/:id - updates an existing mood log.
+ * Returns 404 if the log doesn't exist or belongs to another user.
+ */
 export async function updateMoodLog(
   req: MoodLogRequest,
   res: Response,
@@ -96,31 +81,16 @@ export async function updateMoodLog(
       return;
     }
 
-    const existing = await prisma.moodLog.findUnique({
-      where: { id: req.params.id },
-    });
+    const moodLog = await moodLogService.updateMoodLog(
+      req.params.id,
+      req.userId!,
+      data
+    );
 
-    if (!existing) {
+    if (!moodLog) {
       res.status(404).json({ error: "Mood log not found" });
       return;
     }
-
-    if (existing.user_id !== req.userId) {
-      res.status(404).json({ error: "Mood log not found" });
-      return;
-    }
-
-    const updateData: Record<string, unknown> = {};
-    if (data.mood_score !== undefined) updateData.mood_score = data.mood_score;
-    if (data.energy_level !== undefined) updateData.energy_level = data.energy_level;
-    if (data.stress_level !== undefined) updateData.stress_level = data.stress_level;
-    if (data.notes !== undefined) updateData.notes = data.notes;
-    if (data.logged_at !== undefined) updateData.logged_at = new Date(data.logged_at);
-
-    const moodLog = await prisma.moodLog.update({
-      where: { id: req.params.id },
-      data: updateData,
-    });
 
     res.status(200).json({ mood_log: moodLog });
   } catch (err) {
@@ -128,27 +98,22 @@ export async function updateMoodLog(
   }
 }
 
+/**
+ * Handles DELETE /api/mood-logs/:id - deletes a mood log.
+ * Returns 404 if the log doesn't exist or belongs to another user.
+ */
 export async function deleteMoodLog(
   req: MoodLogRequest,
   res: Response,
   next: NextFunction
 ): Promise<void> {
   try {
-    const existing = await prisma.moodLog.findUnique({
-      where: { id: req.params.id },
-    });
+    const deleted = await moodLogService.deleteMoodLog(req.params.id, req.userId!);
 
-    if (!existing) {
+    if (!deleted) {
       res.status(404).json({ error: "Mood log not found" });
       return;
     }
-
-    if (existing.user_id !== req.userId) {
-      res.status(404).json({ error: "Mood log not found" });
-      return;
-    }
-
-    await prisma.moodLog.delete({ where: { id: req.params.id } });
 
     res.status(200).json({ message: "Mood log deleted successfully" });
   } catch (err) {

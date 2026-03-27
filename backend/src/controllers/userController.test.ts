@@ -15,15 +15,11 @@ async function registerUser(
 }
 
 beforeEach(async () => {
-  await prisma.passwordReset.deleteMany();
-  await prisma.refreshToken.deleteMany();
-  await prisma.user.deleteMany();
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "MoodLog", "SymptomLog", "Symptom", "MedicationLog", "Medication", "HabitLog", "Habit", "PasswordReset", "RefreshToken", "User" CASCADE');
 });
 
 afterAll(async () => {
-  await prisma.passwordReset.deleteMany();
-  await prisma.refreshToken.deleteMany();
-  await prisma.user.deleteMany();
+  await prisma.$executeRawUnsafe('TRUNCATE TABLE "MoodLog", "SymptomLog", "Symptom", "MedicationLog", "Medication", "HabitLog", "Habit", "PasswordReset", "RefreshToken", "User" CASCADE');
   await prisma.$disconnect();
 });
 
