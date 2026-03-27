@@ -1,0 +1,22 @@
+meta {
+  name: Update Habit Log
+  type: http
+  seq: 3
+}
+
+patch {
+  url: {{baseUrl}}/api/habit-logs/:id
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "value_boolean": false,
+    "notes": "Updated habit log entry"
+  }
+}

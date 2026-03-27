@@ -8,6 +8,7 @@ import symptomLogRoutes from "./routes/symptom-logs";
 import medicationRoutes from "./routes/medications";
 import medicationLogRoutes from "./routes/medication-logs";
 import habitRoutes from "./routes/habits";
+import habitLogRoutes from "./routes/habit-logs";
 import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
@@ -27,6 +28,7 @@ app.use("/api/symptom-logs", symptomLogRoutes);
 app.use("/api/medications", medicationRoutes);
 app.use("/api/medication-logs", medicationLogRoutes);
 app.use("/api/habits", habitRoutes);
+app.use("/api/habit-logs", habitLogRoutes);
 
 app.use(errorHandler);
 

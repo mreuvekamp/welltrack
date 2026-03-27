@@ -1,0 +1,24 @@
+meta {
+  name: Create Habit Log
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/habit-logs
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "habit_id": "uuid-of-habit",
+    "value_boolean": true,
+    "notes": "Completed morning exercise",
+    "logged_at": "2025-01-15T10:00:00.000Z"
+  }
+}
