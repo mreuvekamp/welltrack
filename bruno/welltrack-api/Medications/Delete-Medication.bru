@@ -1,0 +1,15 @@
+meta {
+  name: Delete Medication
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/medications/:id
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
