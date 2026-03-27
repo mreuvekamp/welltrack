@@ -155,3 +155,10 @@ Response: 201 Created
 "severity": 7,
 ...
 }
+
+## Security requirements
+- NEVER hardcode credentials - always use environment variables
+- Use .env.sample for templates, never commit .env files
+- Sanitize all user inputs before database queries
+- Use parameterized queries - never string concatenation for SQL
+- Log errors without exposing sensitive data
