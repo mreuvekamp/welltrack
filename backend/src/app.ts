@@ -4,6 +4,7 @@ import authRoutes from "./routes/auth";
 import userRoutes from "./routes/users";
 import symptomRoutes from "./routes/symptoms";
 import moodLogRoutes from "./routes/mood-logs";
+import medicationRoutes from "./routes/medications";
 import { errorHandler } from "./middleware/errorHandler";
 
 const app = express();
@@ -19,6 +20,7 @@ app.use("/api/auth", authRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/symptoms", symptomRoutes);
 app.use("/api/mood-logs", moodLogRoutes);
+app.use("/api/medications", medicationRoutes);
 
 app.use(errorHandler);
 
