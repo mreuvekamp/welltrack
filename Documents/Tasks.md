@@ -119,37 +119,37 @@ This document breaks down the WellTrack requirements into actionable development
 
 ### 2.1 React Project Setup
 
-- [ ] Initialize React app with Vite and TypeScript (`npm create vite@latest`)
-- [ ] Install dependencies: react-router-dom, axios, tailwindcss, react-hook-form, zod
-- [ ] Configure Tailwind CSS with custom color palette (soft teal, sage - per requirements)
-- [ ] Set up folder structure: `/components`, `/pages`, `/hooks`, `/services`, `/types`
-- [ ] Create API service layer with axios instance and interceptors for auth
-- [ ] Set up environment variables for API base URL
+- [x] Initialize React app with Vite and TypeScript (`npm create vite@latest`)
+- [x] Install dependencies: react-router-dom, axios, tailwindcss, react-hook-form, zod
+- [x] Configure Tailwind CSS with custom color palette (soft teal, sage - per requirements)
+- [x] Set up folder structure: `/components`, `/pages`, `/hooks`, `/services`, `/types`
+- [x] Create API service layer with axios instance and interceptors for auth
+- [x] Set up environment variables for API base URL
 
 ### 2.2 Authentication State & Routing
 
-- [ ] Create AuthContext for managing user state and tokens
-- [ ] Implement token storage (localStorage or httpOnly cookies)
-- [ ] Create ProtectedRoute component to guard authenticated pages
-- [ ] Set up React Router with public and protected routes
-- [ ] Implement automatic token refresh on 401 responses
+- [x] Create AuthContext for managing user state and tokens
+- [x] Implement token storage (localStorage or httpOnly cookies)
+- [x] Create ProtectedRoute component to guard authenticated pages
+- [x] Set up React Router with public and protected routes
+- [x] Implement automatic token refresh on 401 responses
 
 ### 2.3 Auth Pages
 
-- [ ] Create Login page with email/password form
-- [ ] Create Register page with email/password/confirm password form
-- [ ] Create Forgot Password page with email input
-- [ ] Create Reset Password page with new password form
-- [ ] Add form validation with react-hook-form and Zod
-- [ ] Display API error messages to users
-- [ ] Add loading states to submit buttons
+- [x] Create Login page with email/password form
+- [x] Create Register page with email/password/confirm password form
+- [x] Create Forgot Password page with email input
+- [x] Create Reset Password page with new password form
+- [x] Add form validation with react-hook-form and Zod
+- [x] Display API error messages to users
+- [x] Add loading states to submit buttons
 
 ### 2.4 Layout & Navigation
 
-- [ ] Create main app layout with header and navigation
-- [ ] Build bottom navigation bar for mobile (Dashboard, Log, History, Trends, Settings)
-- [ ] Create responsive sidebar for desktop view
-- [ ] Add user menu with logout option
+- [x] Create main app layout with header and navigation
+- [x] Build bottom navigation bar for mobile (Dashboard, Log, History, Trends, Settings)
+- [x] Create responsive sidebar for desktop view
+- [x] Add user menu with logout option
 
 ### 2.5 Dashboard Page
 
