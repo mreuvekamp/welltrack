@@ -1,0 +1,23 @@
+meta {
+  name: Create Medication
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{baseUrl}}/api/medications
+  body: json
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
+
+body:json {
+  {
+    "name": "Ibuprofen",
+    "dosage": "200mg",
+    "frequency": "Twice daily"
+  }
+}
