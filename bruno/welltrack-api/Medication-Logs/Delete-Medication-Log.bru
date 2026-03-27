@@ -1,0 +1,15 @@
+meta {
+  name: Delete Medication Log
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/medication-logs/:id
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
