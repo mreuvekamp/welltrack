@@ -63,7 +63,7 @@ No spaces in file or directory names. Use hyphens (`kebab-case`) instead.
 ## Testing Requirements
 Before marking any task as cpmplete:
 1. Write unit tests for new functionality
-2. n the full test suite with: `npm test`
+2. Run the full test suite with: `npm test`
 3. If tests fail:
  - Analyze the failure output
  - Fix the code (not the tests, unless tests are incorrect)
@@ -72,6 +72,7 @@ Before marking any task as cpmplete:
 - Success responses with valid input
 - Authentication requirements
 - Edge cases
+
 ## Test Commands
 - Backend tests: `cd backend && npm test`
 - Frontend tests: `cd frontend && npm test`
@@ -82,15 +83,75 @@ Before marking any task as cpmplete:
 
 De Bruno collectie staat in `bruno/welltrack-api/`. Elk nieuw API endpoint moet worden opgenomen als `.bru` bestand in de betreffende subsectie (bijv. `Auth/`, `Users/`, `Symptoms/`, etc.).
 
-## Documentation
-
-- `Documents/Requirements.md` — Full product requirements and data model
-- `Documents/Tasks.md` — Implementation task breakdown by phase
-- `Documents/Wireframes/` — UI wireframes for all screens
-
 ## UX Guidelines
 
 The target audience includes users with brain fog and fatigue. Prioritize:
 - Large touch targets (min 48px), minimal steps to log (2-3 taps)
 - Visual feedback with colors/icons on scales, not just numbers
 - Soft, calming palette (teal, sage) — avoid clinical aesthetics
+
+## Documentation
+
+- `Documents/Requirements.md` — Full product requirements and data model
+- `Documents/Tasks.md` — Implementation task breakdown by phase
+- `Documents/Wireframes/` — UI wireframes for all screens
+
+## Documentation Requirements
+
+### README.md
+Keep updated with:
+- Quick start instructions (clone, install, run)
+- Environment variables table with descriptions
+- Available npm scripts and what they do
+
+Update README when:
+- Adding new features or endpoints
+- Changing environment variables
+- Adding new npm scripts or dependencies
+
+### Code Comments
+Add comments when:
+- The "why" isn't obvious from the code
+- There's a non-obvious edge case being handled
+- You're working around a bug or limitation
+- The function has complex parameters or return values
+
+Don't add comments when:
+- The code is self-explanatory
+- You'd just be restating what the code does
+
+For exported functions, use JSDoc format:
+/**
+* Creates a new symptom log for the authenticated user.
+* @param userId - The ID of the user creating the log
+* @param data - The symptom log data
+* @returns The created symptom log with ID
+* @throws AppError 404 if symptom doesn't exist
+  */
+
+### API Documentation
+Maintain a simple API reference in /docs/api.md with:
+- Endpoint URL and method
+- Brief description
+- Whether auth is required
+- Request body example (if applicable)
+- Success response example
+
+Format example:
+### Create Symptom Log
+POST /api/symptom-logs (requires auth)
+
+Request:
+{
+"symptomId": "uuid",
+"severity": 7,
+"notes": "Started after lunch"
+}
+
+Response: 201 Created
+{
+"id": "uuid",
+"symptomId": "uuid",
+"severity": 7,
+...
+}
