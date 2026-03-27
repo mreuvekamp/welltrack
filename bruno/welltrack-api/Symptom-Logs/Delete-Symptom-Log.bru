@@ -1,0 +1,15 @@
+meta {
+  name: Delete Symptom Log
+  type: http
+  seq: 4
+}
+
+delete {
+  url: {{baseUrl}}/api/symptom-logs/:id
+  body: none
+  auth: bearer
+}
+
+auth:bearer {
+  token: {{accessToken}}
+}
